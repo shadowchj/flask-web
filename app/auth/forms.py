@@ -20,7 +20,7 @@ class RegistrationForm(FlaskForm):
     username = StringField('用户名', validators=[
         DataRequired(), Length(1, 64),
         Regexp('^[_A-Za-z\u4e00-\u9fa5]*$', 0,
-               '用户名只能由中文，字母，数字，下划线组成')])
+               '用户名只能由中文，字母，下划线组成')])
     password = PasswordField('密码', validators=[DataRequired(), Length(8, message='密码长度不能小于8位'), 
         EqualTo('password2', message='两次输入密码不一样！')])
     password2 = PasswordField('确认密码', validators=[DataRequired()])
