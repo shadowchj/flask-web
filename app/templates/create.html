@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Flasky - Create Blog{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>创建日志</h1>
+</div>
+<form class="form form-horizontal" method="post" role="form">
+	{{ form.hidden_tag() }}
+  	{{ wtf.form_errors(form, hiddens="only") }}
+
+	{{ wtf.form_field(form.title) }}
+  	{{ wtf.form_field(form.summary) }}
+  	{{ wtf.form_field(form.body) }}
+  	{{ wtf.form_field(form.submit) }}
+    <a type="button" class="btn btn-primary" href="{{url_for('.index')}}" onclick="{if(confirm('确定要取消本次编辑?')){return true}return false}">取消</a>
+</form>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}
