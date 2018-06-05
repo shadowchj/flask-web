@@ -27,9 +27,8 @@ class EditProfileAdminForm(FlaskForm):
                                              Email()])
     username = StringField('用户名', validators=[
         DataRequired(), Length(1, 64),
-        Regexp('^[A-Za-z][A-Za-z0-9_.]*$', 0,
-               'Usernames must have only letters, numbers, dots or '
-               'underscores')])
+        Regexp('^[_A-Za-z\u4e00-\u9fa5]*$', 0,
+               '用户名只能由中文，字母，下划线组成')])
     #SelectField是表单控件<select>的包装，实现下拉列表，实例为其choices属性中设置的各选项(必须是元组组成的列表)
     #各个元组包含两个元素：选项的标识符和显示在控件中的文本字符串，Coerce=Int初始设置把字段值变成整数
     role = SelectField('权限', coerce=int)
@@ -47,12 +46,12 @@ class EditProfileAdminForm(FlaskForm):
     def validate_email(self, field):
         if field.data != self.user.email and \
                 User.query.filter_by(email=field.data).first():
-            raise ValidationError('Email already registered.')
+            raise ValidationError('邮箱已经存在.')
 
     def validate_username(self, field):
         if field.data != self.user.username and \
                 User.query.filter_by(username=field.data).first():
-            raise ValidationError('Username already in use.')
+            raise ValidationError('用户名已经被使用.')
 
 #编写博客表单
 class PostForm(FlaskForm):
