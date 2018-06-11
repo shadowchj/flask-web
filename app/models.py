@@ -284,6 +284,7 @@ class Post(db.Model):
         target.body_html = bleach.linkify(bleach.clean(
             markdown(value, output_format='html'),
             tags=allowed_tags, strip=True))
+        target.timestamp = datetime.utcnow()
 
     def to_json(self):
         json_post = {
